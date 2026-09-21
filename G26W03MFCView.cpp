@@ -27,6 +27,8 @@ BEGIN_MESSAGE_MAP(CG26W03MFCView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	//ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CG26W03MFCView 생성/소멸
@@ -51,7 +53,7 @@ BOOL CG26W03MFCView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CG26W03MFCView 그리기
 
-void CG26W03MFCView::OnDraw(CDC* /*pDC*/)
+void CG26W03MFCView::OnDraw(CDC* pDC)
 {
 	CG26W03MFCDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
@@ -59,6 +61,9 @@ void CG26W03MFCView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+	CPoint p = pDoc->GetPoint(); // 문서에서 point를 가져옴
+	pDC->Ellipse(p.x - 50, p.y - 50, p.x + 50, p.y + 50); // point를 중심으로 반지름 50인 원을 그림
+
 }
 
 
@@ -103,3 +108,21 @@ CG26W03MFCDoc* CG26W03MFCView::GetDocument() const // 디버그되지 않은 버
 
 
 // CG26W03MFCView 메시지 처리기
+
+//void CG26W03MFCView::OnLButtonDown(UINT nFlags, CPoint point)
+//{
+//	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+//
+//	CView::OnLButtonDown(nFlags, point);
+
+
+void CG26W03MFCView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	GetDocument()->SetPoint(point); // buttondown이 된다면 point를 가져와서 point를 문서에 전달
+	Invalidate(); // 뷰를 다시 그리도록 무효화
+
+	CView::OnLButtonDown(nFlags, point);
+}
+
