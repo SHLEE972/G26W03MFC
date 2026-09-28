@@ -14,7 +14,7 @@ public:
 	CPoint GetPoint() { return Point; }
 	void SetPoint(CPoint p) { 
 		Point = p; 
-		SetModifiedFlag(); // 문서가 수정되었음을 표시
+		SetModifiedFlag(); // 문서가 수정되었음을 표시 추가
 	}
 
 protected: // serialization에서만 만들어집니다.
