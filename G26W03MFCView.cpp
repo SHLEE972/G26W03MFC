@@ -69,30 +69,18 @@ void CG26W03MFCView::OnDraw(CDC* pDC)
 {
 	CG26W03MFCDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
-
 	if (!pDoc)
 		return;
 
-	// Doc에서 점 가져오기
-	CPoint p = pDoc->GetPoint();
+	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+	//CPoint p = pDoc->GetPoint();
+	//pDC->Ellipse(p.x - 30, p.y - 30, p.x + 30, p.y + 30);
 
-	// 점을 중심으로 원 그리기
-	pDC->Ellipse(
-		p.x - 50,
-		p.y - 50,
-		p.x + 50,
-		p.y + 50
-	);
-
-	// 원의 중심에 십자가 그리기
-	pDC->MoveTo(p.x - 10, p.y);
-	pDC->LineTo(p.x + 10, p.y);
-
-	pDC->MoveTo(p.x, p.y - 10);
-	pDC->LineTo(p.x, p.y + 10);
-
+	for (int i = 0; i < pDoc->GetPointsCount(); i++) {
+		CPoint p = pDoc->GetPoint(i);
+		pDC->Ellipse(p.x - 30, p.y - 30, p.x + 30, p.y + 30);
+	}
 }
-
 
 // CG26W03MFCView 인쇄
 
@@ -147,7 +135,7 @@ void CG26W03MFCView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
-	GetDocument()->SetPoint(point); // buttondown이 된다면 point를 가져와서 point를 문서에 전달
+	GetDocument()->AddPoint(point); 
 	Invalidate(); // 뷰를 다시 그리도록 무효화
 
 	CView::OnLButtonDown(nFlags, point);
