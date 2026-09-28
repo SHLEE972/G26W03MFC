@@ -53,16 +53,43 @@ BOOL CG26W03MFCView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CG26W03MFCView 그리기
 
+//void CG26W03MFCView::OnDraw(CDC* pDC)
+//{
+//	CG26W03MFCDoc* pDoc = GetDocument();
+//	ASSERT_VALID(pDoc);
+//	if (!pDoc)
+//		return;
+//
+//	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+//	CPoint p = pDoc->GetPoint(); // 문서에서 point를 가져옴
+//	pDC->Ellipse(p.x - 50, p.y - 50, p.x + 50, p.y + 50); // point를 중심으로 반지름 50인 원을 그림
+//
+//}
 void CG26W03MFCView::OnDraw(CDC* pDC)
 {
 	CG26W03MFCDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
+
 	if (!pDoc)
 		return;
 
-	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
-	CPoint p = pDoc->GetPoint(); // 문서에서 point를 가져옴
-	pDC->Ellipse(p.x - 50, p.y - 50, p.x + 50, p.y + 50); // point를 중심으로 반지름 50인 원을 그림
+	// Doc에서 점 가져오기
+	CPoint p = pDoc->GetPoint();
+
+	// 점을 중심으로 원 그리기
+	pDC->Ellipse(
+		p.x - 50,
+		p.y - 50,
+		p.x + 50,
+		p.y + 50
+	);
+
+	// 원의 중심에 십자가 그리기
+	pDC->MoveTo(p.x - 10, p.y);
+	pDC->LineTo(p.x + 10, p.y);
+
+	pDC->MoveTo(p.x, p.y - 10);
+	pDC->LineTo(p.x, p.y + 10);
 
 }
 
